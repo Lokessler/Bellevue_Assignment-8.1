@@ -13,17 +13,19 @@ import os   # used to interface with OS
 def file_prompt():
     lock =  True    # used 'lock' and loop for extreame case where file exists
     path = ''       # our 'directory' on OS to save file in
-    full_path = ''  # file handle of 'directory' and 'file name' 
+    full_path = ''  # file handle of 'directory' and 'file name'
+
+    # a try/catch block would probably be better than loop
     while lock:
         io = input('Please enter directory where to save a file\n-->>> ')
         if os.path.isdir(io):
             path = io
         elif os.path.isdir(io) == False:
-            os.makedirs(io) # create directories on OS recursively
+            os.makedirs(io)     # create directories on OS recursively
             path = io
 
         io = input('Please enter file name\n-->>> ')
-        full_path = path + io
+        full_path = path + io   # concat 'path' with user input as file name
         lock = False
 
         # sanity check if file exists already
