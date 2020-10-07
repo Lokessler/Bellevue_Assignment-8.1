@@ -17,14 +17,19 @@ def file_prompt():
 
     # a try/catch block would probably be better than loop
     while lock:
-        io = input('Please enter directory where to save a file\n-->>> ')
+        io = str(input('Please enter directory where to save a file\n-->>> '))
+        # check for trailing "forward-slash", and concat '/' at end of string
+        if io[len(io) - 1] is not '/':
+            io += '/'
+        # check user input actually is a directory on the OS
         if os.path.isdir(io):
             path = io
         elif os.path.isdir(io) == False:
             os.makedirs(io)     # create directories on OS recursively
             path = io
 
-        io = input('Please enter file name\n-->>> ')
+        io = str(input('Please enter file name\n-->>> '))
+
         full_path = path + io   # concat 'path' with user input as file name
         lock = False
 
@@ -40,18 +45,15 @@ def file_contents():
     u_dict = {}
 
     # loop can be added for more 'items', if necessary
-    io = input('Please enter your name: ')
-    u_dict['name'] = io
-    io = input('Please enter your address: ')
-    u_dict['address'] = io
-    io = input('Please enter your phone number: ')
-    u_dict['phone'] = io
+    u_dict['name'] = str(input('Please enter your name: '))
+    u_dict['address'] = str(input('Please enter your address: '))
+    u_dict['phone'] = str(input('Please enter your phone number: '))
 
     return u_dict
 
 def create_file(fp, udict):
     # concat Dictionary values to a CSV
-    f_input = str(udict['name']) + ',' + str(udict['address']) + ',' + str(udict['phone'])
+    f_input = str(udict['name']) + ',' + str(udict['address']) + ',' + str(udict['phone'] + '\n')
 
     # open path and file 'fp' as file handle 'fh' for writing
     with open(fp, 'w') as fh:
